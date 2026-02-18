@@ -1,48 +1,61 @@
-import { Job, ContactMessage } from '../types';
-import { INITIAL_JOBS } from '../constants';
+import { Project, ContactMessage } from '../types';
 
-const JOBS_KEY = 'structura_jobs';
+const PROJECTS_KEY = 'structura_projects';
 const MESSAGES_KEY = 'structura_messages';
 
-export const getJobs = (): Job[] => {
+/* ── Projects ── */
+
+export function getProjects(): Project[] {
   try {
-    const stored = localStorage.getItem(JOBS_KEY);
-    if (!stored) {
-      localStorage.setItem(JOBS_KEY, JSON.stringify(INITIAL_JOBS));
-      return INITIAL_JOBS;
-    }
-    return JSON.parse(stored);
-  } catch (e) {
-    console.error("Error reading jobs from storage", e);
-    return INITIAL_JOBS;
+    const stored = localStorage.getItem(PROJECTS_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
   }
-};
+}
 
-export const saveJob = (job: Job): Job[] => {
-  const jobs = getJobs();
-  const newJobs = [job, ...jobs];
-  localStorage.setItem(JOBS_KEY, JSON.stringify(newJobs));
-  return newJobs;
-};
+export function saveProject(project: Project): Project[] {
+  try {
+    const projects = getProjects();
+    const existing = projects.find(p => p.id === project.id);
+    const updated = existing
+      ? projects.map(p => p.id === project.id ? project : p)
+      : [...projects, project];
+    localStorage.setItem(PROJECTS_KEY, JSON.stringify(updated));
+    return updated;
+  } catch {
+    return getProjects();
+  }
+}
 
-export const deleteJob = (id: string): Job[] => {
-  const jobs = getJobs();
-  const newJobs = jobs.filter(j => j.id !== id);
-  localStorage.setItem(JOBS_KEY, JSON.stringify(newJobs));
-  return newJobs;
-};
+export function deleteProject(id: string): Project[] {
+  try {
+    const projects = getProjects().filter(p => p.id !== id);
+    localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+    return projects;
+  } catch {
+    return getProjects();
+  }
+}
 
-export const getMessages = (): ContactMessage[] => {
+/* ── Messages ── */
+
+export function getMessages(): ContactMessage[] {
   try {
     const stored = localStorage.getItem(MESSAGES_KEY);
     return stored ? JSON.parse(stored) : [];
-  } catch (e) {
+  } catch {
     return [];
   }
-};
+}
 
-export const saveMessage = (msg: ContactMessage): void => {
-  const msgs = getMessages();
-  const newMsgs = [msg, ...msgs];
-  localStorage.setItem(MESSAGES_KEY, JSON.stringify(newMsgs));
-};
+export function saveMessage(message: ContactMessage): ContactMessage[] {
+  try {
+    const messages = getMessages();
+    const updated = [...messages, message];
+    localStorage.setItem(MESSAGES_KEY, JSON.stringify(updated));
+    return updated;
+  } catch {
+    return getMessages();
+  }
+}

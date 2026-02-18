@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const Footer: React.FC = () => {
   return (
@@ -8,12 +8,17 @@ export const Footer: React.FC = () => {
           <span className="font-display text-xl font-bold tracking-widest text-white block mb-1">
             STRUC<span className="text-neon-blue">TURA</span>
           </span>
-          <span className="text-gray-500 text-xs font-mono">ENGINEERING THE IMPOSSIBLE</span>
+          <span className="text-gray-500 text-xs font-mono">
+            ENGINEERING THE IMPOSSIBLE
+          </span>
         </div>
         <div className="flex gap-8 text-gray-400 text-sm font-mono">
-            <a href="#" className="hover:text-neon-blue transition-colors">LINKEDIN</a>
-            <a href="#" className="hover:text-neon-blue transition-colors">TWITTER</a>
-            <a href="#" className="hover:text-neon-blue transition-colors">BEHANCE</a>
+          <a href="#" className="hover:text-neon-blue transition-colors">
+            LINKEDIN
+          </a>
+          <a href="#" className="hover:text-neon-blue transition-colors">
+            TWITTER
+          </a>
         </div>
         <div className="text-gray-600 text-xs">
           © 2042 STRUCTURA INC. ALL RIGHTS RESERVED.
