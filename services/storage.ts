@@ -1,61 +1,77 @@
+// src/services/storage.ts
+import { supabase } from './supabase';
 import { Project, ContactMessage } from '../types';
-
-const PROJECTS_KEY = 'structura_projects';
-const MESSAGES_KEY = 'structura_messages';
 
 /* ── Projects ── */
 
-export function getProjects(): Project[] {
-  try {
-    const stored = localStorage.getItem(PROJECTS_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
+export async function getProjects(): Promise<Project[]> {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) { console.error(error); return []; }
+  return data ?? [];
 }
 
-export function saveProject(project: Project): Project[] {
-  try {
-    const projects = getProjects();
-    const existing = projects.find(p => p.id === project.id);
-    const updated = existing
-      ? projects.map(p => p.id === project.id ? project : p)
-      : [...projects, project];
-    localStorage.setItem(PROJECTS_KEY, JSON.stringify(updated));
-    return updated;
-  } catch {
-    return getProjects();
-  }
+export async function saveProject(
+  project: Omit<Project, 'id'>
+): Promise<Project | null> {
+  const { data, error } = await supabase
+    .from('projects')
+    .insert([project])
+    .select()
+    .single();
+  if (error) { console.error(error); return null; }
+  return data;
 }
 
-export function deleteProject(id: string): Project[] {
-  try {
-    const projects = getProjects().filter(p => p.id !== id);
-    localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
-    return projects;
-  } catch {
-    return getProjects();
-  }
+export async function deleteProject(id: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('projects')
+    .delete()
+    .eq('id', id);
+  if (error) { console.error(error); return false; }
+  return true;
+}
+
+/* ── Image Upload ── */
+
+export async function uploadProjectImage(file: File): Promise<string | null> {
+  const ext = file.name.split('.').pop();
+  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from('project-images')         // ← your bucket name
+    .upload(fileName, file, { cacheControl: '3600', upsert: false });
+
+  if (error) { console.error(error); return null; }
+
+  const { data } = supabase.storage
+    .from('project-images')
+    .getPublicUrl(fileName);
+
+  return data.publicUrl;
 }
 
 /* ── Messages ── */
 
-export function getMessages(): ContactMessage[] {
-  try {
-    const stored = localStorage.getItem(MESSAGES_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
+export async function getMessages(): Promise<ContactMessage[]> {
+  const { data, error } = await supabase
+    .from('messages')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) { console.error(error); return []; }
+  return data ?? [];
 }
 
-export function saveMessage(message: ContactMessage): ContactMessage[] {
-  try {
-    const messages = getMessages();
-    const updated = [...messages, message];
-    localStorage.setItem(MESSAGES_KEY, JSON.stringify(updated));
-    return updated;
-  } catch {
-    return getMessages();
-  }
+export async function saveMessage(
+  message: Omit<ContactMessage, 'id'>
+): Promise<ContactMessage | null> {
+  const { data, error } = await supabase
+    .from('messages')
+    .insert([message])
+    .select()
+    .single();
+  if (error) { console.error(error); return null; }
+  return data;
 }

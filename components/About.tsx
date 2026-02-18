@@ -1,9 +1,20 @@
-import React from "react";
+// src/components/About.tsx
+import React, { useState, useEffect } from "react";
 import { Project } from "../types";
 import { getProjects } from "../services/storage";
 
 export const About: React.FC = () => {
-  const projects = getProjects();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const data = await getProjects();
+      setProjects(data);
+      setLoading(false);
+    })();
+  }, []);
 
   return (
     <div className="bg-structure-gray py-20 relative">
@@ -77,10 +88,25 @@ export const About: React.FC = () => {
             Featured Works
           </h3>
           <p className="text-gray-500 text-center text-sm font-mono mb-12 tracking-widest uppercase">
-            {projects.length} Project{projects.length !== 1 ? "s" : ""}
+            {loading
+              ? "Loading..."
+              : `${projects.length} Project${projects.length !== 1 ? "s" : ""}`}
           </p>
 
-          {projects.length === 0 ? (
+          {/* Loading skeleton */}
+          {loading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-96 rounded-sm bg-white/5 animate-pulse"
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Empty state */}
+          {!loading && projects.length === 0 && (
             <div className="flex flex-col items-center justify-center py-24 border border-dashed border-white/10 rounded-sm">
               <span className="text-4xl mb-4">🏗️</span>
               <p className="text-gray-500 font-mono text-sm tracking-widest uppercase">
@@ -90,7 +116,10 @@ export const About: React.FC = () => {
                 Add projects from the admin dashboard.
               </p>
             </div>
-          ) : (
+          )}
+
+          {/* Project grid */}
+          {!loading && projects.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project: Project) => (
                 <div
@@ -107,10 +136,10 @@ export const About: React.FC = () => {
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-deep-space via-deep-space/50 to-transparent opacity-90" />
 
-                  {/* Hover corner accent */}
+                  {/* Corner accent on hover */}
                   <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-r-[40px] border-t-neon-blue/30 border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  {/* Text content */}
+                  {/* Text */}
                   <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <span className="text-neon-blue font-mono text-xs tracking-widest mb-2 block uppercase">
                       {project.category}
