@@ -67,7 +67,7 @@ export const About: React.FC = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-neon-blue to-neon-purple opacity-20 transform translate-x-4 translate-y-4 rounded-sm" />
             <img
-              src="https://picsum.photos/600/600?grayscale"
+              src="https://i.ibb.co/1YD80Px6/image.png"
               alt="Engineer Portrait"
               className="relative z-10 w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700 border-2 border-white/10"
             />
