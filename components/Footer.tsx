@@ -1,5 +1,12 @@
 import React from "react";
-import { FaLinkedin, FaTwitter, FaGithub, FaEnvelope } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaTwitter,
+  FaGithub,
+  FaEnvelope,
+  FaTiktok,
+  FaTelegram,
+} from "react-icons/fa";
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -17,25 +24,27 @@ export const Footer: React.FC = () => {
           </p>
           <div className="flex gap-4 text-gray-400">
             <a
-              href="#"
+              href="https://www.linkedin.com/in/charles-musili-b56aa5395?utm_source=share_via&utm_content=profile&utm_medium=member_android"
               className="hover:text-neon-blue transition-colors text-lg"
             >
               <FaLinkedin />
             </a>
+
             <a
-              href="#"
+              href="https://www.tiktok.com/@charles.musii08?_r=1&_t=ZS-948QbzcabhZ"
               className="hover:text-neon-blue transition-colors text-lg"
             >
-              <FaTwitter />
+              <FaTiktok />
             </a>
             <a
-              href="#"
+              href="https://t.me/+254110245722"
               className="hover:text-neon-blue transition-colors text-lg"
             >
-              <FaGithub />
+              <FaTelegram />
             </a>
+            {/**/}
             <a
-              href="mailto:contact@structura.com"
+              href="mailto:musilinguli70@gmail.com"
               className="hover:text-neon-blue transition-colors text-lg"
             >
               <FaEnvelope />
@@ -72,7 +81,7 @@ export const Footer: React.FC = () => {
           </ul>
         </div>
 
-        {/* Resources */}
+        {/* Resources 
         <div>
           <h4 className="text-white font-semibold mb-4 tracking-wide">
             Resources
@@ -100,6 +109,7 @@ export const Footer: React.FC = () => {
             </li>
           </ul>
         </div>
+        */}
 
         {/* Newsletter */}
         <div>
