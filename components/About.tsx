@@ -29,10 +29,10 @@ export const About: React.FC = () => {
               Designing for <br /> Resilience
             </h3>
             <p className="text-gray-400 text-lg leading-relaxed mb-8">
-              With over 15 years of experience in high-density urban planning
-              and structural dynamics, I specialize in creating infrastructure
-              that adapts to its environment. My work focuses on the
-              intersection of classic civil engineering principles and emerging
+              With over 3 years of experience in high-density urban planning and
+              structural dynamics, I specialize in creating infrastructure that
+              adapts to its environment. My work focuses on the intersection of
+              classic civil engineering principles and emerging
               nanotechnologies.
             </p>
             <div className="grid grid-cols-2 gap-4 text-white font-mono text-sm">
@@ -40,25 +40,25 @@ export const About: React.FC = () => {
                 <span className="block text-gray-500 text-xs mb-1 tracking-widest uppercase">
                   Specialty
                 </span>
-                Seismic Dampening
+                Structural Dynamics
               </div>
               <div className="border-l-2 border-neon-purple pl-4">
                 <span className="block text-gray-500 text-xs mb-1 tracking-widest uppercase">
                   Education
                 </span>
-                M.S. Structural Eng.
+                BSC. Civil Eng.
               </div>
               <div className="border-l-2 border-neon-blue pl-4">
                 <span className="block text-gray-500 text-xs mb-1 tracking-widest uppercase">
                   Tools
                 </span>
-                AutoCAD / Python / AI
+                AutoCAD / ArchCAD / Revit / Robot / Excel Sheets
               </div>
               <div className="border-l-2 border-neon-purple pl-4">
                 <span className="block text-gray-500 text-xs mb-1 tracking-widest uppercase">
                   Status
                 </span>
-                Available for Consult
+                Available for Consult, Projects and Jobs.
               </div>
             </div>
           </div>
