@@ -9,23 +9,34 @@ export const Contact: React.FC = () => {
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
 
-    // Simulate network delay then save
-    setTimeout(() => {
-      saveMessage({
+    try {
+      const saved = await saveMessage({
         name: formState.name,
         email: formState.email,
         message: formState.message,
         date: new Date().toISOString(),
       });
 
+      if (!saved) {
+        // saving failed
+        console.error("Failed to save message");
+        setStatus("idle");
+        alert("Sorry, could not send your message. Please try again later.");
+        return;
+      }
+
       setStatus("sent");
       setFormState({ name: "", email: "", message: "" });
       setTimeout(() => setStatus("idle"), 3000);
-    }, 1000);
+    } catch (err) {
+      console.error(err);
+      setStatus("idle");
+      alert("An unexpected error occurred. Please try again.");
+    }
   };
 
   return (

@@ -6,6 +6,7 @@ import {
   saveProject,
   deleteProject,
   getMessages,
+  deleteMessage,
   uploadProjectImage,
 } from "../services/storage";
 
@@ -135,6 +136,18 @@ export const AdminDashboard: React.FC = () => {
       flash("success", "Project deleted");
     } else {
       flash("error", "Failed to delete project");
+    }
+  };
+
+  /* ---------------- REMOVE MESSAGE ---------------- */
+  const removeMessage = async (id: string) => {
+    if (!window.confirm("Delete this message?")) return;
+    const ok = await deleteMessage(id);
+    if (ok) {
+      setMessages((prev) => prev.filter((m) => m.id !== id));
+      flash("success", "Message deleted");
+    } else {
+      flash("error", "Failed to delete message");
     }
   };
 
@@ -407,8 +420,16 @@ export const AdminDashboard: React.FC = () => {
                 className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-2 hover:border-zinc-600 transition"
               >
                 <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-zinc-100">{msg.name}</h4>
-                  <span className="text-xs text-indigo-400">{msg.email}</span>
+                  <div>
+                    <h4 className="font-semibold text-zinc-100">{msg.name}</h4>
+                    <span className="text-xs text-indigo-400">{msg.email}</span>
+                  </div>
+                  <button
+                    onClick={() => removeMessage(msg.id)}
+                    className="text-xs bg-red-600/80 hover:bg-red-500 text-white px-2 py-1 rounded transition"
+                  >
+                    Delete
+                  </button>
                 </div>
                 <p className="text-sm text-zinc-400">{msg.message}</p>
                 {msg.date && (
