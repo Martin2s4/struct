@@ -59,22 +59,34 @@ export const Footer: React.FC = () => {
           </h4>
           <ul className="space-y-2 text-sm text-gray-400">
             <li>
-              <a href="#" className="hover:text-neon-blue transition-colors">
-                About Us
+              <a
+                href="#home"
+                className="hover:text-neon-blue transition-colors"
+              >
+                Home
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-neon-blue transition-colors">
-                Services
+              <a
+                href="#projects"
+                className="hover:text-neon-blue transition-colors"
+              >
+                Portfolio
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-neon-blue transition-colors">
-                Projects
+              <a
+                href="#testimonials"
+                className="hover:text-neon-blue transition-colors"
+              >
+                Testimonials
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-neon-blue transition-colors">
+              <a
+                href="#contact"
+                className="hover:text-neon-blue transition-colors"
+              >
                 Contact
               </a>
             </li>

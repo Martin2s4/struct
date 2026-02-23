@@ -121,17 +121,62 @@ export async function getMessages(): Promise<ContactMessage[]> {
     .select('*')
     .order('created_at', { ascending: false });
   if (error) { console.error(error); return []; }
-  return data ?? [];
+  
+  // Map database columns (created_at) back to frontend type (date)
+  return (data ?? []).map((msg) => ({
+    id: msg.id,
+    name: msg.name,
+    email: msg.email,
+    message: msg.message,
+    date: msg.created_at,
+  }));
 }
 
 export async function saveMessage(
   message: Omit<ContactMessage, 'id'>
 ): Promise<ContactMessage | null> {
+  // Generate a unique ID for the message
+  const generatedId = typeof crypto !== 'undefined' && typeof (crypto as any).randomUUID === 'function'
+    ? (crypto as any).randomUUID()
+    : `msg-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  // Prepare payload: map 'date' to 'created_at' for the database
+  const payload = {
+    id: generatedId,
+    name: message.name,
+    email: message.email,
+    message: message.message,
+    created_at: message.date, // Map 'date' → 'created_at'
+  };
+
+  console.log('Inserting message:', payload);
+
   const { data, error } = await supabase
     .from('messages')
-    .insert([message])
+    .insert([payload])
     .select()
     .single();
-  if (error) { console.error(error); return null; }
-  return data;
+
+  if (error) {
+    console.error('Supabase error saving message:', error.code, error.message, error.details);
+    return null;
+  }
+
+  // Map response back to ContactMessage type (created_at → date)
+  return {
+    id: data.id,
+    name: data.name,
+    email: data.email,
+    message: data.message,
+    date: data.created_at,
+  };
+}
+
+export async function deleteMessage(id: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('messages')
+    .delete()
+    .eq('id', id);
+  if (error) { console.error(error); return false; }
+  return true;
 }
