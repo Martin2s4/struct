@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  FaLinkedin,
-  FaTwitter,
-  FaGithub,
-  FaEnvelope,
-  FaTiktok,
-  FaTelegram,
-} from "react-icons/fa";
+import { FaLinkedin, FaEnvelope, FaTiktok, FaTelegram } from "react-icons/fa";
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -76,7 +69,7 @@ export const Footer: React.FC = () => {
             </li>
             <li>
               <a
-                href="#testimonials"
+                href="#projects"
                 className="hover:text-neon-blue transition-colors"
               >
                 Testimonials
@@ -135,11 +128,11 @@ export const Footer: React.FC = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 bg-black/40 border border-white/10 text-sm px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-neon-blue"
+              className="rounded-lg flex-1 bg-black/40 border border-white/10 text-sm px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-neon-blue"
             />
             <button
               type="submit"
-              className="bg-neon-blue text-black px-4 py-2 text-sm font-semibold hover:opacity-90 transition"
+              className="rounded-lg m-2 bg-neon-blue text-black px-4 py-2 text-sm font-semibold hover:opacity-90 transition"
             >
               Join
             </button>

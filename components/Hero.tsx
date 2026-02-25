@@ -43,7 +43,7 @@ export const Hero: React.FC = () => {
                 .getElementById("projects")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group relative px-6 py-2.5 bg-neon-blue/10 border border-neon-blue text-neon-blue font-sans font-bold tracking-wider hover:bg-neon-blue hover:text-deep-space transition-all duration-300 text-sm"
+            className="group relative rounded-lg px-6 py-2.5 bg-neon-blue/10 border border-neon-blue text-neon-blue font-sans font-bold tracking-wider hover:bg-neon-blue hover:text-deep-space transition-all duration-300 text-sm"
           >
             VIEW PROJECTS
             <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full"></div>
@@ -54,7 +54,7 @@ export const Hero: React.FC = () => {
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="group relative px-6 py-2.5 bg-neon-blue/10 border border-neon-blue text-neon-blue font-sans font-bold tracking-wider hover:bg-neon-blue hover:text-deep-space transition-all duration-300 text-sm"
+            className="group rounded-lg relative px-6 py-2.5 bg-neon-blue/10 border border-neon-blue text-neon-blue font-sans font-bold tracking-wider hover:bg-neon-blue hover:text-deep-space transition-all duration-300 text-sm"
           >
             Get In Touch
             <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full"></div>
